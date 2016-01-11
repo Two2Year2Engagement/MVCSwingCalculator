@@ -45,16 +45,19 @@ public class View extends JFrame{
 		
 		firstNumber = new JLabel("0");
 		firstNumber.setHorizontalTextPosition(JLabel.RIGHT);
+		firstNumber.setHorizontalAlignment(JLabel.RIGHT);
 		firstNumber.setOpaque(true);
 		firstNumber.setBackground(Color.WHITE);
 		
 		secondNumber = new JLabel("0");
 		secondNumber.setHorizontalTextPosition(JLabel.RIGHT);
+		secondNumber.setHorizontalAlignment(JLabel.RIGHT);
 		secondNumber.setOpaque(true);
 		secondNumber.setBackground(Color.WHITE);
 		
 		answerLabel = new JLabel("0");
 		answerLabel.setHorizontalTextPosition(JLabel.RIGHT);
+		answerLabel.setHorizontalAlignment(JLabel.RIGHT);
 		answerLabel.setOpaque(true);
 		answerLabel.setBackground(Color.WHITE);
 		
@@ -132,16 +135,12 @@ public class View extends JFrame{
 				buttons[i].setForeground(Color.RED);
 			}
 		}
-		
-		buttonsJP.setLayout(new GridLayout(2,1, 1, 1));
-		buttonsJP.add(auxControl);
-		buttonsJP.add(auxOutput);
-		
-		
+
 		//Frame pane
-		getContentPane().setLayout(new GridLayout(2, 1, 2, 2));
-		getContentPane().add(labelsJP);
-		getContentPane().add(buttonsJP);
+		getContentPane().setLayout(new BorderLayout(2, 2));
+		getContentPane().add(labelsJP, BorderLayout.NORTH);
+		getContentPane().add(auxControl, BorderLayout.CENTER);
+		getContentPane().add(auxOutput, BorderLayout.SOUTH);
 		requestFocus();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
