@@ -1,0 +1,22 @@
+package MVC.Calculator;
+
+public class Controller {
+	private View view;
+	private Model model;
+	
+	public Controller(View view, Model model){
+		this.view = view;
+		this.model = model;
+	}
+	
+	public void operate(){
+		if(view.getAnswer()){
+			System.out.println(view.getFirstNumber());
+			model.setFirstNumber(view.getFirstNumber());
+			model.setSecondNumber(view.getSecondNumber());
+			model.operator(view.getOperator());
+			view.setAnswer(model.getAnswer());
+		}
+	}
+
+}
