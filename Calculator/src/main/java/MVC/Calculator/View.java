@@ -23,7 +23,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class View extends JFrame implements ActionListener{
+public class View extends JFrame{
 
 	//Components
 	private JLabel firstNumber, secondNumber, answerLabel, symbolLabel;
@@ -34,12 +34,6 @@ public class View extends JFrame implements ActionListener{
 	Font button = new Font("Arial", 0, 12);
 	Font label = new Font("Arial", 1, 12);
 	
-	//booleans
-	//input second will be used for future operators
-	private boolean inputFirst, inputSecond, getAnswer;
-	
-	//String
-	private String operator, answer;
 	
 	public View(){
 		
@@ -83,7 +77,7 @@ public class View extends JFrame implements ActionListener{
 		JPanel auxOutput = new JPanel();
 		
 		//Buttons
-		buttons = new JButton[20];
+		buttons = new JButton[19];
 		
 		for(int i = 0;i < 10;i++){
 			buttons[i] = new JButton(String.valueOf(i));
@@ -149,13 +143,14 @@ public class View extends JFrame implements ActionListener{
 		getContentPane().add(labelsJP);
 		getContentPane().add(buttonsJP);
 		requestFocus();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
-		//action listeners
+		/*//action listeners
 		for(int i = 0;i < buttons.length;i++){
 			buttons[i].addActionListener(this);
 		}
-		
+		*/
 		//Exit Listener
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent e) {
@@ -163,193 +158,17 @@ public class View extends JFrame implements ActionListener{
 			}
 		});
 		
-		//booleans
-		inputFirst = true; 
-		inputSecond  = false;
-		getAnswer = false;
-		
-		//operator
-		operator = "";
-		answer = "";
 		
 		//Icon
 		ImageIcon img = new ImageIcon("C:/Users/JAT/Desktop/Git/MVCSwingCalculator/Calculator/src/icon.gif");
         Image logo = img.getImage();
         setIconImage(logo);
 	}
-	
-	public void actionPerformed(ActionEvent e){
-		//Numbers
-		if(e.getSource() == buttons[0]){
-			addDigit(0);
+	public void addCalculatorListener(ActionListener calculatorListener){
+		for(int i = 0;i < buttons.length;i++){
+			buttons[i].addActionListener(calculatorListener);
 		}
-		if(e.getSource() == buttons[1]){
-			addDigit(1);
-		}
-		if(e.getSource() == buttons[2]){
-			addDigit(2);
-		}
-		if(e.getSource() == buttons[3]){
-			addDigit(3);
-		}
-		if(e.getSource() == buttons[4]){
-			addDigit(4);
-		}
-		if(e.getSource() == buttons[5]){
-			addDigit(5);
-		}
-		if(e.getSource() == buttons[6]){
-			addDigit(6);
-		}
-		if(e.getSource() == buttons[7]){
-			addDigit(7);
-		}
-		if(e.getSource() == buttons[8]){
-			addDigit(8);
-		}
-		if(e.getSource() == buttons[9]){
-			addDigit(9);
-		}
-		
-		//operators
-		if(e.getSource() == buttons[10]){
-			operator("+");
-		}
-		if(e.getSource() == buttons[11]){
-			operator("-");
-		}
-		if(e.getSource() == buttons[12]){
-			operator("*");
-		}
-		if(e.getSource() == buttons[13]){
-			operator("/");
-		}
-		
-		//controls
-		if(e.getSource() == buttons[14]){
-			signChange();
-		}
-		if(e.getSource() == buttons[15]){
-			floatPoint();
-		}
-		if(e.getSource() == buttons[16]){
-			clear();
-		}
-		if(e.getSource() == buttons[17]){
-			equals();
-		}
-		if(e.getSource() == buttons[18]){
-			minusDigit();
-		}
-		
-		
-	}
-	
-	public void addDigit(int i){
-		if(inputFirst){
-			String str = getFirstNumber();
-			if(str.indexOf("0") == 0){
-				setFirstNumber(i+"");
-			}else{
-				setFirstNumber(str+i);
-			}
-		}else{
-			String str = getSecondNumber();
-			if(str.indexOf("0") == 0){
-				setSecondNumber(i+"");
-			}else{
-				setSecondNumber(str+i);
-			}
-		}
-	}
-	
-	public void operator(String str){
-		inputFirst = false;
-		inputSecond = true;
-		operator = str;
-		setSymbolLabel(str);
-		//System.out.println(firstNumber.getText());
-		//System.out.println(operator);
-	}
-	
-	public void signChange(){
-		if(inputFirst){
-			String str = getFirstNumber();
-			
-			if (str.length() > 0 && !str.equals("0")) {
-				if (str.indexOf("-") == 0)
-					setFirstNumber(str.substring(1));
-				else
-					setFirstNumber("-" + str);
-			}
-		}else{
-			String str = getSecondNumber();
-			
-			if (str.length() > 0 && !str.equals("0")) {
-				if (str.indexOf("-") == 0)
-					setSecondNumber(str.substring(1));
-				else
-					setSecondNumber("-" + str);
-			}
-		}
-	}
-	
-	public void floatPoint(){
-		if(inputFirst){
-			String str = getFirstNumber();
-			
-			if(!(str.indexOf(".") > 0)){
-				setFirstNumber(str+".");
-			}
-		}else{
-			String str = getSecondNumber();
-			
-			if(!(str.indexOf(".") > 0)){
-				setSecondNumber(str+".");
-			}
-		}
-	}
-	
-	public void clear(){
-		inputFirst = true;
-		inputSecond = false;
-		getAnswer = false;
-		setFirstNumber("0");
-		setSecondNumber("0");
-		setAnswerLabel("0");
-		setSymbolLabel(" ");
-	}
-	
-	public void equals(){
-		inputFirst = false;
-		inputSecond = false;
-		getAnswer = true;
-		setAnswerLabel(answer);
-		//System.out.println(secondNumber.getText());
-	}
-	
-	
-	public void minusDigit(){
-		if(inputFirst){
-			String str = getFirstNumber();
-			
-			if(str.length() > 1 && !str.equalsIgnoreCase("0")){
-				str = str.substring(0, (str.length() - 1));
-				setFirstNumber(str);
-			}else{
-				setFirstNumber("0");
-			}
-		}else{
-			String str = getSecondNumber();
-			
-			if(str.length() > 1 && !str.equalsIgnoreCase("0")){
-				str = str.substring(0, (str.length() - 1));
-				setSecondNumber(str);
-			}else{
-				setSecondNumber("0");
-			}
-		}
-	}
+	}	
 
 	public String getFirstNumber() {
 		return firstNumber.getText();
@@ -379,16 +198,9 @@ public class View extends JFrame implements ActionListener{
 		this.symbolLabel.setText(symbolLabel);
 	}
 
-	public String getOperator() {
-		return operator;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
 	
-	public boolean getAnswer(){
-		return getAnswer;
+	public JButton getButtons(int i){
+		return buttons[i];
 	}
 	
 }

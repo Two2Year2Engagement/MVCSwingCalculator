@@ -11,9 +11,6 @@ public class App
        View view = new View();
        Model model = new Model();
        Controller controller = new Controller(view, model);
-       if(view.getAnswer()){
-    	   controller.operate();
-       }
     	   
        view.setTitle("MVCCalculator@naomijub");
        view.setSize(600, 600);
@@ -21,5 +18,6 @@ public class App
        view.pack();
        view.setResizable(false);
        view.setVisible(true);
+       
     }
 }

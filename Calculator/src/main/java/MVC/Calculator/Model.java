@@ -16,9 +16,7 @@ public class Model {
 	}
 
 	public void setFirstNumber(String firstNumber) {
-		System.out.println(firstNumber);
 		this.firstNumber = Double.parseDouble(firstNumber);
-		System.out.println(this.firstNumber);
 	}
 
 	public String getSecondNumber() {
