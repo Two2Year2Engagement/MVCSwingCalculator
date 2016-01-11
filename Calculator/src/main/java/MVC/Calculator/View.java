@@ -80,7 +80,7 @@ public class View extends JFrame{
 		JPanel auxOutput = new JPanel();
 		
 		//Buttons
-		buttons = new JButton[19];
+		buttons = new JButton[23];
 		
 		for(int i = 0;i < 10;i++){
 			buttons[i] = new JButton(String.valueOf(i));
@@ -91,6 +91,11 @@ public class View extends JFrame{
 		buttons[13] = new JButton("/");
 		buttons[14] = new JButton("-/+");
 		buttons[15] = new JButton(".");
+		
+		buttons[19] = new JButton("**");
+		buttons[20] = new JButton("1/X");
+		buttons[21] = new JButton("X!");
+		buttons[22] = new JButton("Log");
 		
 		
 		//result button - extra grid
@@ -104,7 +109,7 @@ public class View extends JFrame{
 		auxOutput.add(buttons[17]);
 		auxOutput.add(buttons[18]);
 		
-		auxControl.setLayout(new GridLayout(4, 4, 2, 2));
+		auxControl.setLayout(new GridLayout(5, 4, 2, 2));
 		//first row
 		for(int i = 7;i < 10;i++){
 			auxControl.add(buttons[i]);
@@ -125,6 +130,11 @@ public class View extends JFrame{
 		auxControl.add(buttons[0]);
 		auxControl.add(buttons[15]);
 		auxControl.add(buttons[13]);
+		//fifthrow
+		auxControl.add(buttons[19]);
+		auxControl.add(buttons[20]);
+		auxControl.add(buttons[21]);
+		auxControl.add(buttons[22]);
 				
 		//Buttons color Set
 		for(int i = 0; i < buttons.length;i++){
@@ -145,11 +155,6 @@ public class View extends JFrame{
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
-		/*//action listeners
-		for(int i = 0;i < buttons.length;i++){
-			buttons[i].addActionListener(this);
-		}
-		*/
 		//Exit Listener
 		addWindowListener(new WindowAdapter() {
 			public void windowClosed(WindowEvent e) {

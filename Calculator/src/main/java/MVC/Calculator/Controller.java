@@ -71,6 +71,18 @@ public class Controller {
 			if(e.getSource() == view.getButtons(13)){
 				operator("/");
 			}
+			if(e.getSource() == view.getButtons(19)){
+				operator("**");
+			}
+			if(e.getSource() == view.getButtons(20)){
+				operator("1/X");
+			}
+			if(e.getSource() == view.getButtons(21)){
+				operator("X!");
+			}
+			if(e.getSource() == view.getButtons(22)){
+				operator("Log");
+			}
 			
 			//controls
 			if(e.getSource() == view.getButtons(14)){
@@ -93,26 +105,40 @@ public class Controller {
 		public void addDigit(int i){
 			if(inputFirst){
 				String str = view.getFirstNumber();
-				if(str.indexOf("0") == 0){
+				if(str.indexOf("0") == 0 && str.indexOf("0.") != 0){
 					view.setFirstNumber(i+"");
 				}else{
 					view.setFirstNumber(str+i);
 				}
 			}else{
-				String str = view.getSecondNumber();
-				if(str.indexOf("0") == 0){
-					view.setSecondNumber(i+"");
-				}else{
+				if(inputSecond){
+					String str = view.getSecondNumber();
+					if(str.indexOf("0") == 0 && str.indexOf("0.") != 0){
+						view.setSecondNumber(i+"");
+					}else{
 					view.setSecondNumber(str+i);
+					}
+				}else{
+					clear();
 				}
 			}
 		}
 		
 		public void operator(String str){
-			inputFirst = false;
-			inputSecond = true;
-			operator = str;
-			view.setSymbolLabel(str);
+			if(str.equalsIgnoreCase("Log") || str.equalsIgnoreCase("1/X") 
+					|| str.equalsIgnoreCase("X!") ){
+				inputFirst = false;
+				inputSecond = false;
+				operator = str;
+				view.setSymbolLabel(str);
+			}else{
+				inputFirst = false;
+				inputSecond = true;
+				operator = str;
+				view.setSymbolLabel(str);
+			}
+			
+			
 		}
 		
 		public void signChange(){
@@ -126,13 +152,17 @@ public class Controller {
 						view.setFirstNumber("-" + str);
 				}
 			}else{
-				String str = view.getSecondNumber();
+				if(inputSecond){
+					String str = view.getSecondNumber();
 				
-				if (str.length() > 0 && !str.equals("0")) {
-					if (str.indexOf("-") == 0)
-						view.setSecondNumber(str.substring(1));
-					else
-						view.setSecondNumber("-" + str);
+					if (str.length() > 0 && !str.equals("0")) {
+						if (str.indexOf("-") == 0)
+							view.setSecondNumber(str.substring(1));
+						else
+							view.setSecondNumber("-" + str);
+					}
+				}else{
+					clear();
 				}
 			}
 		}
@@ -141,13 +171,13 @@ public class Controller {
 			if(inputFirst){
 				String str = view.getFirstNumber();
 				
-				if(!(str.indexOf(".") > 0)){
+				if(!(str.indexOf(".") > 1)){
 					view.setFirstNumber(str+".");
 				}
 			}else{
 				String str = view.getSecondNumber();
 				
-				if(!(str.indexOf(".") > 0)){
+				if(!(str.indexOf(".") > 1)){
 					view.setSecondNumber(str+".");
 				}
 			}
@@ -187,13 +217,17 @@ public class Controller {
 					view.setFirstNumber("0");
 				}
 			}else{
-				String str = view.getSecondNumber();
+				if(inputSecond){
+					String str = view.getSecondNumber();
 				
-				if(str.length() > 1 && !str.equalsIgnoreCase("0")){
-					str = str.substring(0, (str.length() - 1));
-					view.setSecondNumber(str);
+					if(str.length() > 1 && !str.equalsIgnoreCase("0")){
+						str = str.substring(0, (str.length() - 1));
+						view.setSecondNumber(str);
+					}else{
+						view.setSecondNumber("0");
+					}
 				}else{
-					view.setSecondNumber("0");
+					clear();
 				}
 			}
 		}

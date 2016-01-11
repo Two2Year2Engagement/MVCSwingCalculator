@@ -47,6 +47,14 @@ public class Model {
 				break;
 		case "*": multiply();
 				break;
+		case "**": power();
+				break;
+		case "1/X": invert();
+				break;
+		case "X!": fatorial();
+				break;
+		case "Log": log();
+				break;
 		}
 	}
 	
@@ -68,5 +76,31 @@ public class Model {
 		}else{
 			erro = "Cannot Divide by 0";
 		}
+	}
+	
+	public void power(){
+		answer = Math.pow(firstNumber, secondNumber);
+	}
+	
+	public void invert(){
+		answer = 1 / firstNumber;
+	}
+	
+	public void fatorial(){
+		int aux = (int) firstNumber;
+		int fat = 1;
+		
+		if(aux < 2){
+			answer = fat;
+		}else{
+			for(int i = 1;i <= aux;i++){
+				fat = fat * i;
+			}
+			answer = fat;
+		}
+	}
+	
+	public void log(){
+		answer = Math.log(firstNumber);
 	}
 }
